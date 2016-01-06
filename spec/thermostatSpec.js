@@ -3,12 +3,13 @@ describe('Thermostat', function() {
   var thermostat;
 
   beforeEach(function() {
-    thermostat = new Thermostat(temperature=20,minimum=10,isPowerSavingOn=true);
+    'use strict';
+    thermostat = new Thermostat(20,10,true);
   });
 
   describe('thermostat starts at 20 degrees', function() {
     it('sets start temperature', function() {
-      expect(thermostat.temperature).toEqual(20);
+      expect(thermostat.getCurrentTemperature()).toEqual(20);
     });
   });
 
@@ -16,14 +17,14 @@ describe('Thermostat', function() {
     it('resets temperature', function() {
       thermostat.upButton();
       thermostat.resetButton();
-      expect(thermostat.temperature).toEqual(20);
+      expect(thermostat.getCurrentTemperature()).toEqual(20);
     });
   });
 
   describe('#upButton', function() {
     it('increases temperature', function() {
       thermostat.upButton();
-      expect(thermostat.temperature).toEqual(21);
+      expect(thermostat.getCurrentTemperature()).toEqual(21);
     });
 
     describe('when #isPowerSavingOn true', function () {
@@ -44,7 +45,7 @@ describe('Thermostat', function() {
         it('increases temperature', function() {
           thermostat.temperature = 25;
           thermostat.upButton();
-          expect(thermostat.temperature).toEqual(26);
+          expect(thermostat.getCurrentTemperature()).toEqual(26);
         });
       });
 
@@ -62,7 +63,7 @@ describe('Thermostat', function() {
 
     it('decreases temperature', function() {
       thermostat.downButton();
-      expect(thermostat.temperature).toEqual(19);
+      expect(thermostat.getCurrentTemperature()).toEqual(19);
     });
 
     describe('when temperature at 10C', function () {

@@ -1,8 +1,13 @@
 function Thermostat(temperature, minimum, isPowerSavingOn) {
+  'use strict';
   this.temperature = temperature || 20;
   this.minimum = minimum || 10;
   this.isPowerSavingOn = isPowerSavingOn || true;
 }
+
+Thermostat.prototype.getCurrentTemperature = function () {
+  return this.temperature;
+};
 
 Thermostat.prototype.resetButton = function () {
   this.temperature = 20;
