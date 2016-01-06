@@ -12,6 +12,14 @@ describe('Thermostat', function() {
     });
   });
 
+  describe('thermostat temperature allowed to be reset', function() {
+    it('resets temperature', function() {
+      thermostat.upButton();
+      thermostat.resetButton();
+      expect(thermostat.temperature).toEqual(20);
+    });
+  });
+
   describe('#upButton', function() {
     it('increases temperature', function() {
       thermostat.upButton();
