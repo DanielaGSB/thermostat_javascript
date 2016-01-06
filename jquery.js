@@ -12,12 +12,6 @@
  * Date: 2015-04-28T16:19Z
  */
 
-
- window.onload = function() {
-
-     alert( "welcome" );
-
-
 (function( global, factory ) {
 
 	if ( typeof module === "object" && typeof module.exports === "object" ) {
@@ -10355,4 +10349,3 @@ if ( typeof noGlobal === strundefined ) {
 return jQuery;
 
 }));
- };
