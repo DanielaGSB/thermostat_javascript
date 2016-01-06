@@ -4,33 +4,35 @@ describe('Thermostat', function() {
 
   beforeEach(function() {
     'use strict';
-    thermostat = new Thermostat(20,10,true);
+    thermostat = new Thermostat();
   });
 
-  describe('thermostat starts at 20 degrees', function() {
-    it('sets start temperature', function() {
-      expect(thermostat.getCurrentTemperature()).toEqual(20);
+  describe('#getCurrentTemperature', function() {
+    it('has default value of DEFAULT_TEMPERATURE', function() {
+      expect(thermostat.getCurrentTemperature()).toEqual(thermostat.DEFAULT_TEMPERATURE);
     });
   });
 
-  describe('thermostat temperature allowed to be reset', function() {
+  describe('#resetButton', function() {
     it('resets temperature', function() {
       thermostat.upButton();
       thermostat.resetButton();
-      expect(thermostat.getCurrentTemperature()).toEqual(20);
+      expect(thermostat.getCurrentTemperature()).toEqual(thermostat.DEFAULT_TEMPERATURE);
     });
   });
 
   describe('#upButton', function() {
     it('increases temperature', function() {
       thermostat.upButton();
-      expect(thermostat.getCurrentTemperature()).toEqual(21);
+      expect(thermostat.getCurrentTemperature()).toEqual(thermostat.DEFAULT_TEMPERATURE + 1);
     });
 
     describe('when #isPowerSavingOn true', function () {
       describe ('temperature at 25 degrees', function () {
         it('raises error', function() {
-          thermostat.temperature = 25;
+          for (i=thermostat.DEFAULT_TEMPERATURE; i<thermostat.PSM_MAX_TEMPERATURE; i++) {
+            thermostat.upButton();
+          }
           expect( function() {thermostat.upButton();}).toThrow('Temperature at maximum for power saving mode');
         });
       });
@@ -43,15 +45,19 @@ describe('Thermostat', function() {
 
       describe ('temperature at 25 degrees', function () {
         it('increases temperature', function() {
-          thermostat.temperature = 25;
+          for (i=thermostat.DEFAULT_TEMPERATURE; i<thermostat.PSM_MAX_TEMPERATURE; i++) {
+            thermostat.upButton();
+          }
           thermostat.upButton();
-          expect(thermostat.getCurrentTemperature()).toEqual(26);
+          expect(thermostat.getCurrentTemperature()).toEqual(thermostat.PSM_MAX_TEMPERATURE + 1);
         });
       });
 
       describe ('temperature at 32 degrees', function () {
         it('raises error', function() {
-          thermostat.temperature = 32;
+          for (i=thermostat.DEFAULT_TEMPERATURE; i<thermostat.PSM_OFF_MAX_TEMPERATURE; i++) {
+            thermostat.upButton();
+          }
           expect( function() {thermostat.upButton();}).toThrow('Temperature at maximum for any mode');
         });
       });
@@ -63,13 +69,15 @@ describe('Thermostat', function() {
 
     it('decreases temperature', function() {
       thermostat.downButton();
-      expect(thermostat.getCurrentTemperature()).toEqual(19);
+      expect(thermostat.getCurrentTemperature()).toEqual(thermostat.DEFAULT_TEMPERATURE - 1);
     });
 
-    describe('when temperature at 10C', function () {
+    describe('when temperature at MINIMUM_TEMPERATURE', function () {
 
       it('raises error', function () {
-        thermostat.temperature = 10;
+        for (i=thermostat.DEFAULT_TEMPERATURE; i>thermostat.MINIMUM_TEMPERATURE; i--) {
+          thermostat.downButton();
+        }
         expect( function() {thermostat.downButton();}).toThrow('Temperature at minimum');
       });
     });
@@ -97,16 +105,20 @@ describe('Thermostat', function() {
 
   describe('#displayColour', function() {
 
-    it('returns green if temperature is below 18', function () {
-      thermostat.temperature = 17;
+    it('returns green if temperature is below LOW_USAGE_TEMPERATURE', function () {
+      for (i=thermostat.DEFAULT_TEMPERATURE; i>(thermostat.LOW_USAGE_TEMPERATURE - 1); i--) {
+        thermostat.downButton();
+      }
       expect(thermostat.displayColour()).toEqual('low-usage');
     });
-    it ('returns yellow if temperature is below 25', function () {
-      thermostat.temperature = 20;
+    it ('returns yellow if temperature is below HIGH_USAGE_TEMPERATURE', function () {
+      thermostat.temperature = thermostat.DEFAULT_TEMPERATURE;
       expect(thermostat.displayColour()).toEqual('medium-usage');
     });
     it ('returns red if temperature is above 25', function () {
-      thermostat.temperature = 27;
+      for (i=thermostat.DEFAULT_TEMPERATURE; i<thermostat.HIGH_USAGE_TEMPERATURE; i++) {
+        thermostat.upButton();
+      }
       expect(thermostat.displayColour()).toEqual('high-usage');
     });
   });

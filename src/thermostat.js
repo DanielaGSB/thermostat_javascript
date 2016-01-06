@@ -1,6 +1,11 @@
 function Thermostat(temperature, minimum, powerSaving) {
   'use strict';
-  this.temperature = temperature || 20;
+  this.DEFAULT_TEMPERATURE = 20;
+  this.PSM_MAX_TEMPERATURE = 25;
+  this.PSM_OFF_MAX_TEMPERATURE = 32;
+  this.LOW_USAGE_TEMPERATURE = 18;
+  this.HIGH_USAGE_TEMPERATURE = 25;
+  this.temperature = temperature || this.DEFAULT_TEMPERATURE;
   this.MINIMUM_TEMPERATURE = minimum || 10;
   this.powerSavingMode = powerSaving || true;
 }
@@ -14,17 +19,17 @@ Thermostat.prototype.getCurrentTemperature = function () {
 };
 
 Thermostat.prototype.resetButton = function () {
-  this.temperature = 20;
+  this.temperature = this.DEFAULT_TEMPERATURE;
 };
 
 Thermostat.prototype.upButton = function () {
-  if (this.temperature >= 32 && this.isPowerSavingOn() === false) {throw 'Temperature at maximum for any mode';}
-  if (this.temperature >= 25 && this.isPowerSavingOn() === true) {throw 'Temperature at maximum for power saving mode';}
+  if (this.temperature >= this.PSM_OFF_MAX_TEMPERATURE && this.isPowerSavingOn() === false) {throw 'Temperature at maximum for any mode';}
+  if (this.temperature >= this.PSM_MAX_TEMPERATURE && this.isPowerSavingOn() === true) {throw 'Temperature at maximum for power saving mode';}
   return this.temperature++;
 };
 
 Thermostat.prototype.downButton = function () {
-  if (this.temperature <= 10) {throw 'Temperature at minimum';}
+  if (this.temperature <= this.MINIMUM_TEMPERATURE) {throw 'Temperature at minimum';}
   return this.temperature--;
 };
 
@@ -34,7 +39,7 @@ Thermostat.prototype.powerSavingSwitch = function () {
 };
 
 Thermostat.prototype.displayColour = function () {
-  if (this.temperature < 18) {return 'low-usage';}
-  if (this.temperature < 25) {return 'medium-usage';}
-  if (this.temperature >= 25) {return 'high-usage';}
+  if (this.temperature < this.LOW_USAGE_TEMPERATURE) {return 'low-usage';}
+  if (this.temperature < this.HIGH_USAGE_TEMPERATURE) {return 'medium-usage';}
+  if (this.temperature >= this.HIGH_USAGE_TEMPERATURE) {return 'high-usage';}
 };
