@@ -17,6 +17,14 @@ describe('Thermostat', function() {
       thermostat.upButton();
       expect(thermostat.temperature).toEqual(21);
     });
+
+    describe('when #isPowerSavingOn true and temperature at 25 degrees', function () {
+      it('raises error', function() {
+        thermostat.temperature = 25;
+        expect( function() {thermostat.upButton();}).toThrow('Temperature at maximum for power saving mode');
+      });
+    });
+
   });
 
   describe('#downButton', function() {

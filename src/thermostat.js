@@ -5,6 +5,7 @@ function Thermostat(temperature, minimum, isPowerSavingOn) {
 }
 
 Thermostat.prototype.upButton = function () {
+  if (this.temperature >= 25 && this.isPowerSavingOn === true) {throw 'Temperature at maximum for power saving mode';}
   return this.temperature++;
 };
 
