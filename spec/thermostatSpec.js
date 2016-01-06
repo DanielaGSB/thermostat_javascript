@@ -92,7 +92,21 @@ describe('Thermostat', function() {
       thermostat.powerSavingSwitch();
       expect(thermostat.isPowerSavingOn).toBe(true);
     });
-
   });
 
+  describe('#displayColour', function() {
+
+    it('returns green if temperature is below 18', function () {
+      thermostat.temperature = 17;
+      expect(thermostat.displayColour()).toEqual('Green');
+    });
+    it ('returns yellow if temperature is below 25', function () {
+      thermostat.temperature = 20;
+      expect(thermostat.displayColour()).toEqual('Yellow');
+    });
+    it ('returns red if temperature is above 25', function () {
+      thermostat.temperature = 27;
+      expect(thermostat.displayColour()).toEqual('Red');
+    });
   });
+});

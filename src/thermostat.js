@@ -23,3 +23,9 @@ Thermostat.prototype.powerSavingSwitch = function () {
   if (this.isPowerSavingOn === false) {this.isPowerSavingOn = true;}
   else if (this.isPowerSavingOn === true) {this.isPowerSavingOn = false;}
 };
+
+Thermostat.prototype.displayColour = function () {
+  if (this.temperature < 18) {return 'Green';}
+  if (this.temperature < 25) {return 'Yellow';}
+  if (this.temperature >= 25) {return 'Red';}
+};
