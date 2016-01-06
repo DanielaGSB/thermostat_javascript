@@ -99,15 +99,15 @@ describe('Thermostat', function() {
 
     it('returns green if temperature is below 18', function () {
       thermostat.temperature = 17;
-      expect(thermostat.displayColour()).toEqual('Green');
+      expect(thermostat.displayColour()).toEqual('low-usage');
     });
     it ('returns yellow if temperature is below 25', function () {
       thermostat.temperature = 20;
-      expect(thermostat.displayColour()).toEqual('Yellow');
+      expect(thermostat.displayColour()).toEqual('medium-usage');
     });
     it ('returns red if temperature is above 25', function () {
       thermostat.temperature = 27;
-      expect(thermostat.displayColour()).toEqual('Red');
+      expect(thermostat.displayColour()).toEqual('high-usage');
     });
   });
 });

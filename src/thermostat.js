@@ -34,7 +34,7 @@ Thermostat.prototype.powerSavingSwitch = function () {
 };
 
 Thermostat.prototype.displayColour = function () {
-  if (this.temperature < 18) {return 'Green';}
-  if (this.temperature < 25) {return 'Yellow';}
-  if (this.temperature >= 25) {return 'Red';}
+  if (this.temperature < 18) {return 'low-usage';}
+  if (this.temperature < 25) {return 'medium-usage';}
+  if (this.temperature >= 25) {return 'high-usage';}
 };
