@@ -38,7 +38,7 @@ describe('Thermostat', function() {
 
     describe('when #isPowerSavingOn false', function () {
       beforeEach(function() {
-        thermostat.isPowerSavingOn = false;
+        thermostat.powerSavingMode = false;
       });
 
       describe ('temperature at 25 degrees', function () {
@@ -77,7 +77,7 @@ describe('Thermostat', function() {
 
   describe('#isPowerSavingOn', function () {
     it('returns true by default', function () {
-      expect(thermostat.isPowerSavingOn).toBe(true);
+      expect(thermostat.isPowerSavingOn()).toBe(true);
     });
   });
 
@@ -85,13 +85,13 @@ describe('Thermostat', function() {
 
     it('switches #isPowerSavingOn return value to false', function () {
       thermostat.powerSavingSwitch();
-      expect(thermostat.isPowerSavingOn).toBe(false);
+      expect(thermostat.isPowerSavingOn()).toBe(false);
     });
 
     it('if called again switches #isPowerSavingOn return value to true', function () {
       thermostat.powerSavingSwitch();
       thermostat.powerSavingSwitch();
-      expect(thermostat.isPowerSavingOn).toBe(true);
+      expect(thermostat.isPowerSavingOn()).toBe(true);
     });
   });
 

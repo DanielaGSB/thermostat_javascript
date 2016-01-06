@@ -1,9 +1,13 @@
-function Thermostat(temperature, minimum, isPowerSavingOn) {
+function Thermostat(temperature, minimum, powerSaving) {
   'use strict';
   this.temperature = temperature || 20;
-  this.minimum = minimum || 10;
-  this.isPowerSavingOn = isPowerSavingOn || true;
+  this.MINIMUM_TEMPERATURE = minimum || 10;
+  this.powerSavingMode = powerSaving || true;
 }
+
+Thermostat.prototype.isPowerSavingOn = function () {
+  return this.powerSavingMode;
+};
 
 Thermostat.prototype.getCurrentTemperature = function () {
   return this.temperature;
@@ -14,8 +18,8 @@ Thermostat.prototype.resetButton = function () {
 };
 
 Thermostat.prototype.upButton = function () {
-  if (this.temperature >= 32 && this.isPowerSavingOn === false) {throw 'Temperature at maximum for any mode';}
-  if (this.temperature >= 25 && this.isPowerSavingOn === true) {throw 'Temperature at maximum for power saving mode';}
+  if (this.temperature >= 32 && this.isPowerSavingOn() === false) {throw 'Temperature at maximum for any mode';}
+  if (this.temperature >= 25 && this.isPowerSavingOn() === true) {throw 'Temperature at maximum for power saving mode';}
   return this.temperature++;
 };
 
@@ -25,8 +29,8 @@ Thermostat.prototype.downButton = function () {
 };
 
 Thermostat.prototype.powerSavingSwitch = function () {
-  if (this.isPowerSavingOn === false) {this.isPowerSavingOn = true;}
-  else if (this.isPowerSavingOn === true) {this.isPowerSavingOn = false;}
+  if (this.isPowerSavingOn() === false) {this.powerSavingMode = true;}
+  else if (this.isPowerSavingOn() === true) {this.powerSavingMode = false;}
 };
 
 Thermostat.prototype.displayColour = function () {
