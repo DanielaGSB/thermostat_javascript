@@ -18,13 +18,36 @@ describe('Thermostat', function() {
       expect(thermostat.temperature).toEqual(21);
     });
 
-    describe('when #isPowerSavingOn true and temperature at 25 degrees', function () {
-      it('raises error', function() {
-        thermostat.temperature = 25;
-        expect( function() {thermostat.upButton();}).toThrow('Temperature at maximum for power saving mode');
+    describe('when #isPowerSavingOn true', function () {
+      describe ('temperature at 25 degrees', function () {
+        it('raises error', function() {
+          thermostat.temperature = 25;
+          expect( function() {thermostat.upButton();}).toThrow('Temperature at maximum for power saving mode');
+        });
       });
     });
 
+    describe('when #isPowerSavingOn false', function () {
+      beforeEach(function() {
+        thermostat.isPowerSavingOn = false;
+      });
+
+      describe ('temperature at 25 degrees', function () {
+        it('increases temperature', function() {
+          thermostat.temperature = 25;
+          thermostat.upButton();
+          expect(thermostat.temperature).toEqual(26);
+        });
+      });
+
+      describe ('temperature at 32 degrees', function () {
+        it('raises error', function() {
+          thermostat.temperature = 32;
+          expect( function() {thermostat.upButton();}).toThrow('Temperature at maximum for any mode');
+        });
+      });
+
+    });
   });
 
   describe('#downButton', function() {
