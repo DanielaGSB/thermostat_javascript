@@ -6,6 +6,12 @@ window.onload = function() {
 
     var thermostat = new Thermostat();
 
+    var response;
+
+    $.get( "http://api.openweathermap.org/data/2.5/weather?q=Londonuk&units=metricappid=2de143494c0b295cca9337e1e96b00e0&units=metric", function( response ) {
+    $('#temp_city').text( response.main.temp );
+  });
+
       $("#temperature").text( thermostat.getCurrentTemperature());
       $("#temperature").css('color', 'orange');
 
@@ -47,10 +53,5 @@ window.onload = function() {
         $("#temperature").css('color', 'red');
       }
     };
-
-
-
-
   });
-
 };
