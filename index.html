@@ -8,23 +8,30 @@
 <body>
   <h1>Thermostat</h1>
   <h2><span id='temperature'></span>C</h2>
-  <h1>Current temp: <span id="temp_city"> <span> </h1>
+  <h1>Current temp: <span id="temp_city" > <span> </h1>
   <form id='select_city'>
-    <input id='current_city' type='text' placeholder='city?'></input>
+    <div class="ui-widget">
+      <label for="city">Your city: </label>
+      <input id="city">
+      <!-- Powered by <a href="http://geonames.org">geonames.org</a> -->
+    <!-- <input id='current_city' type='text' placeholder='city?'></input> -->
     <input type='submit'></input>
-    <!-- <option value="london">London</option>
-    <option value="madrid">Madrid</option>
-    <option value="berlin">Berlin</option> -->
+  </div>
   </form>
     <button id='temperature_up'>Up</button>
     <button id='temperature_down'>Down</button>
     <p>Power Saving On? <span id='power_saving_status'></span></p>
     <button id='power_saving_switch'>Power Saving</button>
     <button id='temperature_reset'>Reset Temperature</button>
+
   </p>
   <script src="src/thermostat.js"></script>
   <script src="jquery.js"></script>
   <script src='eventHandler.js'></script>
+  <link rel="stylesheet" href="lib/jquery_ui/jquery-ui.min.css">
+  <script src="lib/jquery_ui/external/jquery/jquery.js"></script>
+  <script src="lib/jquery_ui/jquery-ui.min.js"></script>
+
 </body>
 
 </html>

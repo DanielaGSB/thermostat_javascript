@@ -2,27 +2,26 @@ window.onload = function() {
 
   alert( "welcome" );
   $.get( 'http://api.openweathermap.org/data/2.5/weather?q=london&appid=a3d9eb01d4de82b9b8d0849ef604dbed&units=metric',
+
   function( response ) {
     $('#temp_city').text( response.main.temp );
   });
 
-  $( document ).ready(function () {
+    $( document ).ready(function () {
 
-    var thermostat = new Thermostat();
-
-    var response;
+      var thermostat = new Thermostat();
+      var response;
 
     $('#select_city').submit(function( event ) {
       event.preventDefault();
-      var city = $("#current_city").val();
+      var city = $("#city").val();
     $.get( 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=a3d9eb01d4de82b9b8d0849ef604dbed&units=metric',
     function( data ) {
     $('#temp_city').text( data.main.temp );
   });});
 
-
-      $("#temperature").text( thermostat.getCurrentTemperature());
-      $("#temperature").css('color', 'orange');
+    $("#temperature").text( thermostat.getCurrentTemperature());
+    $("#temperature").css('color', 'orange');
 
 
     $("#temperature_up").click( function () {
@@ -63,4 +62,41 @@ window.onload = function() {
       }
     };
   });
+
+
+    $(function() {
+      function log( message ) {
+        $( "<div>" ).text( message ).prependTo( "#log" );
+        $( "#log" ).scrollTop( 0 );
+      }
+
+      $( "#city" ).autocomplete({
+        source: function( request, response ) {
+          $.ajax({
+            url: "http://gd.geobytes.com/AutoCompleteCity",
+            dataType: "jsonp",
+            data: {
+              q: request.term
+            },
+            success: function( data ) {
+              response( data );
+            }
+          });
+        },
+        minLength: 3,
+        select: function( event, ui ) {
+          log( ui.item ?
+            "Selected: " + ui.item.label :
+            "Nothing selected, input was " + this.value);
+        },
+        open: function() {
+          $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+        },
+        close: function() {
+          $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+        }
+      });
+    });
+
+
 };
