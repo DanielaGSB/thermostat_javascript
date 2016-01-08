@@ -1,8 +1,7 @@
 window.onload = function() {
 
   alert( "welcome" );
-  var city = $("#current_city").val();
-  $.get( 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=a3d9eb01d4de82b9b8d0849ef604dbed&units=metric',
+  $.get( 'http://api.openweathermap.org/data/2.5/weather?q=london&appid=a3d9eb01d4de82b9b8d0849ef604dbed&units=metric',
   function( response ) {
     $('#temp_city').text( response.main.temp );
   });
@@ -13,11 +12,12 @@ window.onload = function() {
 
     var response;
 
-    $('#current_city').change(function() {
+    $('#select_city').submit(function( event ) {
+      event.preventDefault();
       var city = $("#current_city").val();
     $.get( 'http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=a3d9eb01d4de82b9b8d0849ef604dbed&units=metric',
-    function( response ) {
-    $('#temp_city').text( response.main.temp );
+    function( data ) {
+    $('#temp_city').text( data.main.temp );
   });});
 
 
